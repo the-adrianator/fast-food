@@ -1,8 +1,9 @@
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
+import { createUser } from "@/lib/appwrite";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -12,7 +13,9 @@ const SignUp = () => {
     password: "",
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const { name, email, password } = form;
+
     if (!form.name || !form.email || !form.password)
       return Alert.alert(
         "Error",
@@ -22,6 +25,11 @@ const SignUp = () => {
 
     try {
       // call appwrite sign up function
+      await createUser({
+        name,
+        email,
+        password,
+      });
 
       Alert.alert("Success", "You have successfully signed up");
       router.replace("/");
@@ -74,11 +82,11 @@ const SignUp = () => {
         <Text className="base-regular text-gray-100">
           Already have an account?
         </Text>
-        <TouchableOpacity>
-          <Link href="/sign-in" className="base-bold text-primary">
-            Sign In
-          </Link>
-        </TouchableOpacity>
+        {/* <TouchableOpacity> */}
+        <Link href="/sign-in" className="base-bold text-primary">
+          Sign In
+        </Link>
+        {/* </TouchableOpacity> */}
       </View>
     </View>
   );

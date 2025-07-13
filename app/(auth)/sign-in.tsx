@@ -2,7 +2,7 @@ import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 
 const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -61,11 +61,11 @@ const SignIn = () => {
         <Text className="base-regular text-gray-100">
           Don&apos;t have an account?
         </Text>
-        <TouchableOpacity>
-          <Link href="/sign-up" className="base-bold text-primary">
-            Sign Up
-          </Link>
-        </TouchableOpacity>
+        {/* <TouchableOpacity> */}
+        <Link href="/sign-up" className="base-bold text-primary">
+          Sign Up
+        </Link>
+        {/* </TouchableOpacity> */}
       </View>
     </View>
   );
