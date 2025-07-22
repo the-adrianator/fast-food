@@ -1,5 +1,5 @@
 import { CreateUserParams, SignInParams } from "@/type";
-import { Account, Avatars, Client, Databases, ID } from "react-native-appwrite";
+import { Account, Client, Databases, ID, Query } from "react-native-appwrite";
 
 export const appwriteConfig = {
   endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
@@ -8,6 +8,8 @@ export const appwriteConfig = {
   databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
 	userCollectionId: process.env.EXPO_PUBLIC_APPWRITE_USER_COLLECTION_ID!,
 };
+
+// console.log("appwriteConfig", appwriteConfig);
 
 export const client = new Client();
 
@@ -18,7 +20,7 @@ client
 
 export const account = new Account(client);
 export const databases = new Databases(client);
-const avatars = new Avatars(client);
+// const avatars = new Avatars(client);
 // export const storage = new Storage(client);
 
 export const createUser = async ({ email, password, name}: CreateUserParams) => {
@@ -29,9 +31,11 @@ export const createUser = async ({ email, password, name}: CreateUserParams) => 
 
 		await signIn({ email, password });
 
-		const avatarUrl = avatars.getInitials(name).toString();
+		const avatarUrl = `https://cloud.appwrite.io/v1/avatars/initials?name=${encodeURIComponent(name)}`
 
-		console.log("avatarUrl", avatarUrl);
+		// console.log("avatarUrl", avatarUrl.toString());
+
+		// console.log("avatarUrl not toString", avatarUrl);
 
 		const newUser = await databases.createDocument(
 			appwriteConfig.databaseId,
@@ -58,6 +62,25 @@ export const signIn = async ({ email, password }: SignInParams) => {
 		if (!session) throw new Error("Failed to sign in");
 
 		return session;
+	} catch (e) {
+		throw new Error(e as string)
+	}
+}
+
+export const getCurrentUser = async () => {
+	try {
+		const currentAccount = await account.get();
+		if (!currentAccount) throw new Error("Failed to get current account");
+
+		const currentUser = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.userCollectionId,
+			[Query.equal("accountId", currentAccount.$id)]
+		);
+
+		if (!currentUser.documents[0]) throw new Error("Failed to get current user");
+
+		return currentUser.documents[0];
 	} catch (e) {
 		throw new Error(e as string)
 	}

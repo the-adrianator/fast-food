@@ -16,7 +16,7 @@ const SignUp = () => {
   const handleSubmit = async () => {
     const { name, email, password } = form;
 
-    if (!form.name || !form.email || !form.password)
+    if (!name || !email || !password)
       return Alert.alert(
         "Error",
         "Please enter your full name, email and/or password"
@@ -31,7 +31,7 @@ const SignUp = () => {
         password,
       });
 
-      Alert.alert("Success", "You have successfully signed up");
+      // Alert.alert("Success", "You have successfully signed up");
       router.replace("/");
     } catch (error: any) {
       Alert.alert("Error", error.message || "Something went wrong");
