@@ -200,3 +200,26 @@ export const images = {
     trash,
     user,
 };
+
+export const tabs = [
+    {
+        name: "index",
+        title: "Home",
+        icon: images.home,
+    },
+    {
+        name: "search",
+        title: "Search",
+        icon: images.search,
+    },
+    {
+        name: "cart",
+        title: "Cart",
+        icon: images.bag,
+    },
+    {
+        name: "profile",
+        title: "Profile",
+        icon: images.person,
+    }
+]
