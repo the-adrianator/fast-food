@@ -6,7 +6,12 @@ export const appwriteConfig = {
   projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
   platform: "com.fastfood",
   databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
+	bucketId: process.env.EXPO_PUBLIC_APPWRITE_BUCKET_ID!,
 	userCollectionId: process.env.EXPO_PUBLIC_APPWRITE_USER_COLLECTION_ID!,
+	categoriesCollectionId: process.env.EXPO_PUBLIC_APPWRITE_CATEGORIES_COLLECTION_ID!,
+	menuCollectionId: process.env.EXPO_PUBLIC_APPWRITE_MENU_COLLECTION_ID!,
+	customisationsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_CUSTOMISATIONS_COLLECTION_ID!,
+	menuCustomisationsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_MENU_CUSTOMISATIONS_COLLECTION_ID!,
 };
 
 // console.log("appwriteConfig", appwriteConfig);
